@@ -1,3 +1,8 @@
 <resources>
-    <string name="app_name">My Application</string>
+    <string name="app_name">Movie App</string>
+    <string name="view">View:</string>
+    <string name="ratings">Ratings</string>
+    <string name="grade_now">Grade now</string>
+    <string name="watching">Watching</string>
+    <string name="store_line">Store line</string>
 </resources>
