@@ -25,6 +25,9 @@ public class MainActivity extends AppCompatActivity implements IView {
     RecyclerView rcvMovie;
     private RecyclerViewAdapter recyclerViewAdapter;
     private PresenterMovieImpl presenterMovieImpl;
+    private int totalItemCount, lastVisibleItem, firstVisible;
+    private GridLayoutManager gridLayoutManager;
+    private int curPage = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,22 +39,37 @@ public class MainActivity extends AppCompatActivity implements IView {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
-        MovieApi movieApi = retrofit.create(MovieApi.class);
+        final MovieApi movieApi = retrofit.create(MovieApi.class);
+
 
         presenterMovieImpl = new PresenterMovieImpl(this);
         recyclerViewAdapter = new RecyclerViewAdapter(this, presenterMovieImpl.getResultList());
-        rcvMovie.setLayoutManager(new GridLayoutManager(this, 3));
+        gridLayoutManager = new GridLayoutManager(this, 3);
+        rcvMovie.setLayoutManager(gridLayoutManager);
         rcvMovie.setAdapter(recyclerViewAdapter);
 
-        presenterMovieImpl.getDataMovie(movieApi);
+        presenterMovieImpl.getDataMovie(movieApi, curPage);
 
         recyclerViewAdapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void OnItemClick(int position) {
                 Intent intent = new Intent(MainActivity.this, DetailActivity.class);
                 intent.putExtra("Detail", presenterMovieImpl.getResultList().get(position));
-                //int REQUEST_CODE = 1;
-              startActivity(intent);
+                startActivity(intent);
+            }
+        });
+
+        rcvMovie.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                firstVisible = gridLayoutManager.findFirstVisibleItemPosition();
+                totalItemCount = gridLayoutManager.getItemCount();
+                lastVisibleItem = gridLayoutManager.findLastVisibleItemPosition();
+                if (firstVisible + lastVisibleItem >= totalItemCount) {
+                    curPage++;
+                    presenterMovieImpl.getDataMovie(movieApi, curPage);
+                }
             }
         });
     }

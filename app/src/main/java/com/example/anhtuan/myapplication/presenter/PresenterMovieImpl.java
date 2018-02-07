@@ -1,5 +1,8 @@
 package com.example.anhtuan.myapplication.presenter;
 
+import android.support.annotation.NonNull;
+import android.util.Log;
+
 import com.example.anhtuan.myapplication.api.MovieApi;
 import com.example.anhtuan.myapplication.contract.PresenterMovie;
 import com.example.anhtuan.myapplication.model.Example;
@@ -12,10 +15,6 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-
-/**
- * Created by ANH TUAN on 2/5/2018.
- */
 
 public class PresenterMovieImpl implements PresenterMovie {
 
@@ -32,11 +31,13 @@ public class PresenterMovieImpl implements PresenterMovie {
     }
 
     @Override
-    public void getDataMovie(MovieApi movieApi) {
-        Call<Example> call = movieApi.getAllMovie("a07e22bc18f5cb106bfe4cc1f83ad8ed");
+    public void getDataMovie(MovieApi movieApi, int page) {
+        String api_key = "a07e22bc18f5cb106bfe4cc1f83ad8ed";
+        Call<Example> call = movieApi.getAllMovie(api_key, page);
         call.enqueue(new Callback<Example>() {
             @Override
-            public void onResponse(Call<Example> call, Response<Example> response) {
+            public void onResponse(@NonNull Call<Example> call, @NonNull Response<Example> response) {
+                Log.d("TAGA", response.body().getResults().size() + "");
                 if (response.body() != null) {
                     resultList.addAll(response.body().getResults());
                 }
@@ -44,7 +45,7 @@ public class PresenterMovieImpl implements PresenterMovie {
             }
 
             @Override
-            public void onFailure(Call<Example> call, Throwable t) {
+            public void onFailure(@NonNull Call<Example> call, @NonNull Throwable t) {
                 iView.showDataMovieFail();
             }
         });

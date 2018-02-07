@@ -1,5 +1,6 @@
 package com.example.anhtuan.myapplication.adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -17,10 +18,6 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-
-/**
- * Created by ANH TUAN on 2/5/2018.
- */
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.DataViewHolder> {
 
@@ -44,7 +41,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     }
 
     @Override
-    public void onBindViewHolder(DataViewHolder holder, final int position) {
+    public void onBindViewHolder(DataViewHolder holder, @SuppressLint("RecyclerView") final int position) {
         Result result = resultList.get(position);
         Glide.with(context).load("http://image.tmdb.org/t/p/w500" + result.getPosterPath()).into(holder.imgMovie);
         holder.tvTitle.setText(result.getTitle());
@@ -52,7 +49,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         holder.cvMovie.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (onItemClickListener != null){
+                if (onItemClickListener != null) {
                     onItemClickListener.OnItemClick(position);
                 }
             }
@@ -64,7 +61,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         return resultList != null ? resultList.size() : 0;
     }
 
-    public static class DataViewHolder extends RecyclerView.ViewHolder {
+    static class DataViewHolder extends RecyclerView.ViewHolder {
 
         @BindView(R.id.cv_movie)
         CardView cvMovie;
@@ -75,7 +72,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         @BindView(R.id.tv_popularity)
         TextView tvPopularity;
 
-        public DataViewHolder(View itemView) {
+        DataViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
         }

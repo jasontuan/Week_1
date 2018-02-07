@@ -14,13 +14,10 @@ import com.example.anhtuan.myapplication.model.Result;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-/**
- * Created by ANH TUAN on 2/6/2018.
- */
 
 public class DetailActivity extends AppCompatActivity {
 
-    private Result result;
+    Result result;
 
     @BindView(R.id.img_backdrop_detail)
     ImageView imgBackdrop;
@@ -46,6 +43,7 @@ public class DetailActivity extends AppCompatActivity {
         result = new Result();
 
         Bundle bundle = getIntent().getExtras();
+        assert bundle != null;
         result = (Result) bundle.getSerializable("Detail");
 
         Glide.with(this).load("http://image.tmdb.org/t/p/w500" + result.getBackdropPath()).into(imgBackdrop);
