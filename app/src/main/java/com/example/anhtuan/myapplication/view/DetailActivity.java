@@ -2,6 +2,7 @@ package com.example.anhtuan.myapplication.view;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.AppCompatDelegate;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RatingBar;
@@ -38,6 +39,7 @@ public class DetailActivity extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.detail);
+        AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
         ButterKnife.bind(this);
 
         result = new Result();

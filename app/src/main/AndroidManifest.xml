@@ -6,7 +6,7 @@
 
     <application
         android:allowBackup="false"
-        android:icon="@drawable/images"
+        android:icon="@mipmap/images"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
