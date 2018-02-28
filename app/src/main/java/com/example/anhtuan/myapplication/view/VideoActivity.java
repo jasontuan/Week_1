@@ -28,7 +28,7 @@ public class VideoActivity extends YouTubeBaseActivity implements YouTubePlayer.
         bundle = getIntent().getExtras();
         assert bundle != null;
         id_key = bundle.getString("ID_VIDEO");
-        Toast.makeText(this, id_key, Toast.LENGTH_SHORT).show();
+
 
         ytb_player.initialize(API_KEY, this);
     }
@@ -36,6 +36,10 @@ public class VideoActivity extends YouTubeBaseActivity implements YouTubePlayer.
     @Override
     public void onInitializationSuccess(YouTubePlayer.Provider provider, YouTubePlayer youTubePlayer, boolean b) {
         if (null == youTubePlayer) return;
+        youTubePlayer.play();
+        youTubePlayer.setFullscreen(true);
+        youTubePlayer.setPlayerStateChangeListener(playerStateChangeListener);
+        youTubePlayer.setPlaybackEventListener(playbackEventListener);
         if (!b) {
             youTubePlayer.cueVideo(id_key);
         }
@@ -45,4 +49,63 @@ public class VideoActivity extends YouTubeBaseActivity implements YouTubePlayer.
     public void onInitializationFailure(YouTubePlayer.Provider provider, YouTubeInitializationResult youTubeInitializationResult) {
         Toast.makeText(this, "Failed to initialize.", Toast.LENGTH_LONG).show();
     }
+
+    private YouTubePlayer.PlayerStateChangeListener playerStateChangeListener = new YouTubePlayer.PlayerStateChangeListener() {
+        @Override
+        public void onLoading() {
+
+        }
+
+        @Override
+        public void onLoaded(String s) {
+
+        }
+
+        @Override
+        public void onAdStarted() {
+
+        }
+
+        @Override
+        public void onVideoStarted() {
+
+        }
+
+        @Override
+        public void onVideoEnded() {
+
+        }
+
+        @Override
+        public void onError(YouTubePlayer.ErrorReason errorReason) {
+
+        }
+    };
+
+    private YouTubePlayer.PlaybackEventListener playbackEventListener = new YouTubePlayer.PlaybackEventListener() {
+        @Override
+        public void onPlaying() {
+
+        }
+
+        @Override
+        public void onPaused() {
+
+        }
+
+        @Override
+        public void onStopped() {
+
+        }
+
+        @Override
+        public void onBuffering(boolean b) {
+
+        }
+
+        @Override
+        public void onSeekTo(int i) {
+
+        }
+    };
 }
