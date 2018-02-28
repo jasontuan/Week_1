@@ -5,7 +5,7 @@ import android.util.Log;
 
 import com.example.anhtuan.myapplication.api.MovieApi;
 import com.example.anhtuan.myapplication.contract.PresenterMovie;
-import com.example.anhtuan.myapplication.model.Example;
+import com.example.anhtuan.myapplication.model.ListResult;
 import com.example.anhtuan.myapplication.model.Result;
 import com.example.anhtuan.myapplication.contract.IView;
 
@@ -33,11 +33,10 @@ public class PresenterMovieImpl implements PresenterMovie {
     @Override
     public void getDataMovie(MovieApi movieApi, int page) {
         String api_key = "a07e22bc18f5cb106bfe4cc1f83ad8ed";
-        Call<Example> call = movieApi.getAllMovie(api_key, page);
-        call.enqueue(new Callback<Example>() {
+        Call<ListResult> call = movieApi.getAllMovie(api_key, page);
+        call.enqueue(new Callback<ListResult>() {
             @Override
-            public void onResponse(@NonNull Call<Example> call, @NonNull Response<Example> response) {
-                Log.d("TAGA", response.body().getResults().size() + "");
+            public void onResponse(@NonNull Call<ListResult> call, @NonNull Response<ListResult> response) {
                 if (response.body() != null) {
                     resultList.addAll(response.body().getResults());
                 }
@@ -45,9 +44,10 @@ public class PresenterMovieImpl implements PresenterMovie {
             }
 
             @Override
-            public void onFailure(@NonNull Call<Example> call, @NonNull Throwable t) {
+            public void onFailure(@NonNull Call<ListResult> call, @NonNull Throwable t) {
                 iView.showDataMovieFail();
             }
         });
     }
+
 }
